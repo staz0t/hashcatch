@@ -1,9 +1,7 @@
 # hashcatch
-Capture handshakes of nearby WiFi networks automatically
+Hashcatch deauthenticates clients connected to all nearby WiFi networks and tries to capture the handshakes. It can be used in any linux device including Raspberry Pi and Nethunter devices so that you can capture handshakes while walking your dog
 
 Written by [@SivaneshAshok](https://twitter.com/sivaneshashok)
-
-Hashcatch can be used in any linux device including a Raspberry Pi and Nethunter devices so that you can capture handshakes while walking your dog 
 
 #### PoC of hashcatch (running with a couple of WiFi networks within range)
 [![hashcatch PoC](https://asciinema.org/a/AQEzLSxo7teoxPzNSJfwn4UNQ.svg)](https://asciinema.org/a/AQEzLSxo7teoxPzNSJfwn4UNQ)
