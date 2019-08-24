@@ -37,4 +37,4 @@ interface=wlan0
 ignore=Google Starbucks,AndroidAP
 ```
 
-PS: Even though I was working on this script few days before (https://twitter.com/evilsocket "@evilsocket") posted about his (https://twitter.com/pwnagotchi "pwnagotchi"), his work has definitely been an inspiration for this project!
+PS: Even though I was working on this script few days before [@evilsocket](https://twitter.com/evilsocket) posted about his [pwnagotchi](https://twitter.com/pwnagotchi), his work has definitely been an inspiration for this project!
