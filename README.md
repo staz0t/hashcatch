@@ -1,6 +1,7 @@
 # hashcatch
 Capture handshakes of nearby WiFi networks automatically
 
+Hashcatch can be used in any linux device including a Raspberry Pi and Nethunter devices so that you can capture handshakes while walking your dog 
 
 #### Setting up
 1. Run ./setup.sh
@@ -9,6 +10,7 @@ Capture handshakes of nearby WiFi networks automatically
 
 #### Usage
 ```sudo ./hashcatch.sh```
+* The script runs indefinitely until keyboard interrupt
 * Handshakes captured will be stored in handshakes/ directory
 * The captured WiFi network's BSSID and ESSID will be stored in db file
 * [Experimental] If you are connected to the internet while capturing, the following data will also be added to the db file
@@ -24,7 +26,7 @@ Capture handshakes of nearby WiFi networks automatically
 * You can also add an "ignore" field to mention the WiFi networks you want hashcatch to ignore while running
 * Refer the example given below to know about the format in which entries should be added to config file
 
-##### Format of config file
+#### Format of config file
 ```option name=option1,option2,option3```
 
 No space in between option name, equal sign and options
@@ -34,3 +36,5 @@ Example
 interface=wlan0
 ignore=Google Starbucks,AndroidAP
 ```
+
+PS: Even though I was working on this script few days before (https://twitter.com/evilsocket "@evilsocket") posted about his (https://twitter.com/pwnagotchi "pwnagotchi"), his work has definitely been an inspiration for this project!
