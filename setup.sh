@@ -12,7 +12,7 @@ echo "[*] Starting hashcatch setup"
 if [ -f config ] || [ -f db ] || [ -d handshakes ]
 then
 	echo -e "[!] ${RED}WARNING! Continuing with setup will rewrite your existing config file, db file, and your handshakes directory!${NC}"
-	read -p "[!] Do you want to proceed? [y/N]" flag
+	read -p "[!] Do you want to proceed? [y/N]: " flag
 	flag=${flag:-"n"}
 	if [[ $flag == "n" ]]
 	then
@@ -30,8 +30,9 @@ read -p "[*] Enter your wireless interface: " interface
 echo "interface=$interface" >> config
 
 echo -e "[!] ${YELLOW}The following packages are prerequisites for hashcatch and are about to be installed\n\taircrack-ng\n\thashcat-utils\n\thcxtools${NC}"
-read -p "[!] Do you want to proceed? [Y/n]" flag
-if [[ $flag == "y" ]]
+read -p "[!] Do you want to proceed? [Y/n]: " flag
+flag=${flag:-"y"}
+if [[ $flag == "n" ]]
 then
 	echo "[*] Exiting!"
 	exit 0
