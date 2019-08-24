@@ -14,6 +14,7 @@ Hashcatch can be used in any linux device including a Raspberry Pi and Nethunter
 #### Usage
 ```sudo ./hashcatch.sh```
 * The script runs indefinitely until keyboard interrupt
+* If you are targeting a particular wifi network, spend around 20 to 30 seconds to ensure that the handshake gets captured
 * Handshakes captured will be stored in handshakes/ directory
 * The captured WiFi network's BSSID and ESSID will be stored in db file
 * [Experimental] If you are connected to the internet while capturing, the following data will also be added to the db file
