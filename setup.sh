@@ -29,6 +29,13 @@ mkdir handshakes &> /dev/null
 read -p "[*] Enter your wireless interface: " interface
 echo "interface=$interface" >> config
 
+echo -e "[!] ${YELLOW}The following packages are prerequisites for hashcatch and are about to be installed\n\taircrack-ng\n\thashcat-utils\n\thcxtools${NC}"
+read -p "[!] Do you want to proceed? [Y/n]" flag
+if [[ $flag == "y" ]]
+then
+	echo "[*] Exiting!"
+	exit 0
+fi
 sudo apt-get install aircrack-ng -y
 sudo apt-get install hashcat-utils -y
 sudo apt-get install hcxtools -y
