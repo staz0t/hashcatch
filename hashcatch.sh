@@ -32,11 +32,6 @@ echo "|__| |__||__| |__||_______||__| |__||_______||__| |__|  |___|  |_______||_
 echo -en "\n${NC}"
 
 interface=`grep -i 'interface' config | awk -F'=' '{print $2}'`
-if [[ ! `sudo aireplay-ng wlp2s0 --test 2>/dev/null` == *"Injection is working"* ]]
-then
-	echo "[-] Could not set $interface to monitor mode. Exiting!"
-	exit 0
-fi
 
 rm -r /tmp/hc_* &> /dev/null
 
@@ -77,7 +72,7 @@ do
 		((count++))
 		echo -en "\033[2A"
 		echo -en "\033[2K"
-		echo -en "\rAccess Point: ${YELLOW}$essid [$count/${#stations[@]}]${NC}"
+		echo -en "\rAccess Point: ${YELLOW}$essid${NC}"
 		echo -en "\033[2B"
 		echo -en "\033[3A"
 		echo -en "\033[2K"
