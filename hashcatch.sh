@@ -127,7 +127,7 @@ do
 	then
 		echo -en "\033[1A"
 		echo -en "\033[2K"
-		echo -en "\rLast scan: ${YELLOW}No new networks :(${NC}"
+		echo -en "\rLast scan: ${YELLOW}Pwned all nearby WiFi networks${NC}"
 		echo -en "\033[1B"
 		echo -en "\r"
 	else
