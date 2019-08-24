@@ -7,11 +7,9 @@ Written by [@SivaneshAshok](https://twitter.com/sivaneshashok)
 [![hashcatch PoC](https://asciinema.org/a/AQEzLSxo7teoxPzNSJfwn4UNQ.svg)](https://asciinema.org/a/AQEzLSxo7teoxPzNSJfwn4UNQ)
 
 #### Setting up
-1. ```sudo chmod +x setup.sh```
-2. ```sudo chmod +x hashcatch.sh``` 
-2. ```./setup.sh```
-3. Enter the interface that can be switched to monitor mode
-4. The script will install the prerequisites
+1. ```./setup.sh```
+2. Enter the interface that can be switched to monitor mode
+3. The script will install the prerequisites
 
 #### Usage
 ```sudo ./hashcatch.sh```
