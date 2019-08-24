@@ -3,6 +3,9 @@ Capture handshakes of nearby WiFi networks automatically
 
 Hashcatch can be used in any linux device including a Raspberry Pi and Nethunter devices so that you can capture handshakes while walking your dog 
 
+#### PoC of hashcatch (running with just 1 WiFi network in the range)
+[![hashcatch PoC](https://asciinema.org/a/3qfjwzFLRqnMs01A37SDZDfmc.svg)](https://asciinema.org/a/3qfjwzFLRqnMs01A37SDZDfmc)
+
 #### Setting up
 1. Run ./setup.sh
 2. Enter the interface that can be switched to monitor mode
