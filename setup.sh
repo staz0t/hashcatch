@@ -29,7 +29,7 @@ mkdir handshakes &> /dev/null
 read -p "[*] Enter your wireless interface: " interface
 echo "interface=$interface" >> config
 
-echo -e "[!] ${YELLOW}The following packages are prerequisites for hashcatch and are about to be installed\n\taircrack-ng\n\thashcat-utils\n\thcxtools${NC}"
+echo -e "[!] ${YELLOW}The following packages are prerequisites for hashcatch and are about to be installed\n\taircrack-ng\n\thashcat-utils\n\thcxtools\n\tjq${NC}"
 read -p "[!] Do you want to proceed? [Y/n]: " flag
 flag=${flag:-"y"}
 if [[ $flag == "n" ]]
@@ -37,8 +37,19 @@ then
 	echo "[*] Exiting!"
 	exit 0
 fi
-sudo apt-get install aircrack-ng -y
-sudo apt-get install hashcat-utils -y
-sudo apt-get install hcxtools -y
+
+if [[ `cat /etc/os-release` == *debian* ]]
+then
+	sudo apt-get install aircrack-ng -y
+	sudo apt-get install hashcat-utils -y
+	sudo apt-get install hcxtools -y
+	sudo apt-get install jq -y
+elif [[ `cat /etc/os-release` == *arch* ]]
+then
+        sudo pacman -S aircrack-ng --noconfirm
+        sudo pacman -S hashcat-utils --noconfirm
+        sudo pacman -S hcxtools --noconfirm
+	sudo pacman -S jq --noconfirm
+fi
 
 echo "[*] Done"
