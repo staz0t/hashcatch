@@ -79,7 +79,7 @@ do
 	timeout --foreground 3 airodump-ng "$interface" -w /tmp/hc_out --output-format csv &> /dev/null
 
 	#echo "[*] Reading stations"
-	while read -r line; do bssid=$(echo $line | awk -F ',' '{print $1}'); essid=$(echo $line | awk -F',' '{print $14}'); channel=$(echo $line | awk -F',' '{print $4}'); echo $bssid,$essid,$channel; done < /tmp/hc_out-01.csv | grep -iE "([0-9A-F]{2}[:-]){5}([0-9A-F]{2}), [a-zA-Z0-9_' ']+, ([0-9]{1,2})" > /tmp/hc_stations.tmp
+	while read -r line; do bssid=$(echo $line | awk -F ',' '{print $1}'); essid=$(echo $line | awk -F',' '{print $14}'); channel=$(echo $line | awk -F',' '{print $4}'); echo $bssid,$essid,$channel; done < /tmp/hc_out-01.csv | grep -iE "([0-9A-F]{2}[:-]){5}([0-9A-F]{2}), [a-zA-Z0-9_' ''-'!]+, ([0-9]{1,2})" > /tmp/hc_stations.tmp
 
 	#echo "[*] Clearing temp files"
 	rm /tmp/hc_out*
