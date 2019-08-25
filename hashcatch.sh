@@ -18,14 +18,14 @@ fi
 
 if [[ `cat /etc/os-release` == *debian* ]]
 then
-        if [[ `dpkg -s aircrack-ng hashcat-utils hcxtools jq` == *"not installed"* ]]
+        if [[ `dpkg -s aircrack-ng hashcat-utils hcxtools jq 2>&1` == *"not installed"* ]]
 	then
 		echo "[*] Essential package(s) not installed. Run setup.sh and try again"
 		exit 0
 	fi
 elif [[ `cat /etc/os-release` == *arch* ]]
 then
-        if [[ `pacman -Qi aircrack-ng hashcat-utils hcxtools jq` == *"not found"* ]]
+        if [[ `pacman -Qi aircrack-ng hashcat-utils hcxtools jq 2>&1` == *"not found"* ]]
 	then
 		echo "[*] Essential package(s) not installed. Run setup.sh and try again"
 		exit 0
