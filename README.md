@@ -41,4 +41,11 @@ interface=wlan0
 ignore=Google Starbucks,AndroidAP
 ```
 
+#### Features to be added
+* PMKID attack
+* Pixiedust attack for WPS enabled networks
+* More location features
+* Automatically check handshakes with a rainbow table
+
+
 PS: Even though I was working on this script few days before [@evilsocket](https://twitter.com/evilsocket) posted about his [pwnagotchi](https://twitter.com/pwnagotchi), his work has definitely been an inspiration for this project!
