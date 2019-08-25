@@ -16,6 +16,22 @@ then
 	exit 0
 fi
 
+if [[ `cat /etc/os-release` == *debian* ]]
+then
+        if [[ `dpkg -s aircrack-ng hashcat-utils hcxtools jq` == *"not installed"* ]]
+	then
+		echo "[*] Essential package(s) not installed. Run setup.sh and try again"
+		exit 0
+	fi
+elif [[ `cat /etc/os-release` == *arch* ]]
+then
+        if [[ `pacman -Qi aircrack-ng hashcat-utils hcxtools jq` == *"not found"* ]]
+	then
+		echo "[*] Essential package(s) not installed. Run setup.sh and try again"
+		exit 0
+	fi
+fi
+
 RED='\033[0;31m'
 LBLUE='\033[1;34m'
 GREEN='\033[0;32m'
