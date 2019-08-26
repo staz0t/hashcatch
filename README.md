@@ -6,10 +6,18 @@ Written by [@SivaneshAshok](https://twitter.com/sivaneshashok)
 #### PoC of hashcatch (running with a couple of WiFi networks within range)
 [![hashcatch PoC](https://asciinema.org/a/AQEzLSxo7teoxPzNSJfwn4UNQ.svg)](https://asciinema.org/a/AQEzLSxo7teoxPzNSJfwn4UNQ)
 
+#### Prerequisites
+The following packages are necessary for hashcatch to work
+* aircrack-ng
+* hashcat-utils
+* hcxtools
+* jq
+
 #### Setting up
 1. ```./setup.sh```
 2. Enter the interface that can be switched to monitor mode
-3. The script will install the prerequisites
+3. The script will create the required files
+4. The script will also check if prerequisites are installed, in Arch and Debian based distributions
 
 #### Usage
 ```sudo ./hashcatch.sh```
