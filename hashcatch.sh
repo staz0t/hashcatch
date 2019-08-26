@@ -12,7 +12,7 @@ then
 	exit 0
 elif [ ! `grep -i "interface" config | awk -F'=' '{print $2}'` ]
 then
-	echo -e "[-] Interface not mentioned in config file. Run setup.sh and try again"
+	echo -e "[-] Interface not mentioned in config file. Run setup.sh and try again!"
 	exit 0
 fi
 
@@ -20,15 +20,48 @@ if [[ `cat /etc/os-release` == *debian* ]]
 then
         if [[ `dpkg -s aircrack-ng hashcat-utils hcxtools jq 2>&1` == *"not installed"* ]]
 	then
-		echo "[*] Essential package(s) not installed. Run setup.sh and try again"
+		echo "${YELLOW}[!] The following packages are missing. Install them and try again!${NC}"
 		exit 0
+		if [[ `dpkg -s aircrack-ng 2>&1` == *"not installed"* ]]
+		then
+			echo -e "\taircrack-ng"
+			exit 0
+		elif [[ `dpkg -s hashcat-utils 2>&1` == *"not installed"* ]]
+		then
+			echo -e "\thashcat-utils"
+			exit 0
+		elif [[ `dpkg -s hcxtools 2>&1` == *"not installed"* ]]
+		then
+			echo -e "\thcxtools"
+			exit 0
+		elif [[ `dpkg -s jq 2>&1` == *"not installed"* ]]
+		then
+			echo -e "\tjq"
+			exit 0
+		fi
 	fi
 elif [[ `cat /etc/os-release` == *arch* ]]
 then
         if [[ `pacman -Qi aircrack-ng hashcat-utils hcxtools jq 2>&1` == *"not found"* ]]
 	then
-		echo "[*] Essential package(s) not installed. Run setup.sh and try again"
-		exit 0
+		echo "${YELLOW}[!] The following packages are missing. Install them and try again${NC}"
+		if [[ `pacman -Qi aircrack-ng 2>&1` == *"not found"* ]]
+		then
+			echo -e "\taircrack-ng"
+			exit 0
+		elif [[ `pacman -Qi hashcat-utils 2>&1` == *"not found"* ]]
+		then
+			echo -e "\thashcat-utils"
+			exit 0
+		elif [[ `pacman -Qi hcxtools 2>&1` == *"not found"* ]]
+		then
+			echo -e "\thcxtools"
+			exit 0
+		elif [[ `pacman -Qi jq 2>&1` == *"not found"* ]]
+		then
+			echo -e "\tjq"
+			exit 0
+		fi
 	fi
 fi
 
