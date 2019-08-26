@@ -55,7 +55,7 @@ then
         if [[ `pacman -Qi aircrack-ng hashcat-utils hcxtools jq 2>&1` == *"not found"* ]]
 	then
 		echo "${YELLOW}[!] The following packages are missing. Please ensure that you have installed them properly before starting hashcatch${NC}"
-		if [[ `pacman -Qi aircrack-ng hashcat-utils hcxtools jq 2>&1` == *"not found"* ]]
+		if [[ `pacman -Qi aircrack-ng 2>&1` == *"not found"* ]]
 		then
 			echo -e "\taircrack-ng"
 		elif [[ `pacman -Qi hashcat-utils 2>&1` == *"not found"* ]]
