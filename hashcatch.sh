@@ -2,6 +2,13 @@
 
 trap ctrl_c INT
 
+RED='\033[0;31m'
+LBLUE='\033[1;34m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+ORANGE='\033[0;33m'
+NC='\033[0m'
+
 if [ "$EUID" -ne 0 ]
 then
 	echo -e "[-] Requires root permission. Exiting!"
@@ -64,13 +71,6 @@ then
 		fi
 	fi
 fi
-
-RED='\033[0;31m'
-LBLUE='\033[1;34m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-ORANGE='\033[0;33m'
-NC='\033[0m'
 
 ctrl_c(){
 	echo -en "\033[2K"
