@@ -1,7 +1,6 @@
 #!/bin/bash
 
 trap ctrl_c INT
-tput civis
 
 RED='\033[0;31m'
 LBLUE='\033[1;34m'
@@ -98,6 +97,8 @@ spin(){
         sleep 0.1
         echo -en "\033[1D"
 }
+
+tput civis
 
 echo -e "${RED}"
 echo " __   __  _______  _______  __   __  _______  _______  _______  _______  __   __ "; sleep 0.2
