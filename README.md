@@ -3,6 +3,8 @@ Hashcatch deauthenticates clients connected to all nearby WiFi networks and trie
 
 Written by [@SivaneshAshok](https://twitter.com/sivaneshashok)
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 #### PoC of hashcatch (running with a couple of WiFi networks within range)
 [![hashcatch PoC](https://asciinema.org/a/AQEzLSxo7teoxPzNSJfwn4UNQ.svg)](https://asciinema.org/a/AQEzLSxo7teoxPzNSJfwn4UNQ)
 
