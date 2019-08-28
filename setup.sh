@@ -14,26 +14,33 @@ then
 	echo -e "${RED}[!] WARNING! Continuing with setup will rewrite your existing config file, db file, and your handshakes directory!${NC}"
 	read -p "[!] Do you want to proceed? [y/N]: " flag
 	flag=${flag:-"n"}
-	if [[ $flag == "n" ]]
+	if [[ ${flag,,} == "n" ]]
 	then
 		echo "[*] Exiting!"
 		exit 0
 	fi
 fi
 
-sudo rm -r config db handshakes
+sudo rm -r config db handshakes &> /dev/null
 touch config &> /dev/null
 touch db &> /dev/null
 mkdir handshakes &> /dev/null
 
 read -p "[*] Enter your wireless interface: " interface
+echo -e "[*] Trying to set the given interface to monitor mode"
+while [[ `sudo aireplay-ng --test $interface 2>&1` != *"Injection is working"* ]]
+do
+	echo -e "${YELLOW}[-] Could not set the given wireless adapter to monitor mode!${NC}"
+	read -p "[-] Enter another wireless interface to try again: " interface
+done
+echo -e "${GREEN}[+] The adapter is working in monitor mode!${NC}"
 echo "interface=$interface" >> config
 
 if [[ `cat /etc/os-release` == *debian* ]]
 then
         if [[ `dpkg -s aircrack-ng hashcat-utils hcxtools jq 2>&1` == *"not installed"* ]]
 	then
-		echo "${YELLOW}[!] The following packages are missing. Please ensure that you have installed them properly before starting hashcatch${NC}"
+		echo -e "${YELLOW}[!] The following packages are missing. Please ensure that you have installed them properly before starting hashcatch${NC}"
 		if [[ `dpkg -s aircrack-ng 2>&1` == *"not installed"* ]]
 		then
 			echo -e "\taircrack-ng"
@@ -48,13 +55,13 @@ then
 			echo -e "\tjq"
 		fi
 	else
-		echo "${GREEN}[*] All necessary packages are found installed${NC}"
+		echo -e "${GREEN}[*] All necessary packages are found installed${NC}"
 	fi
 elif [[ `cat /etc/os-release` == *arch* ]]
 then
         if [[ `pacman -Qi aircrack-ng hashcat-utils hcxtools jq 2>&1` == *"not found"* ]]
 	then
-		echo "${YELLOW}[!] The following packages are missing. Please ensure that you have installed them properly before starting hashcatch${NC}"
+		echo -e "${YELLOW}[!] The following packages are missing. Please ensure that you have installed them properly before starting hashcatch${NC}"
 		if [[ `pacman -Qi aircrack-ng 2>&1` == *"not found"* ]]
 		then
 			echo -e "\taircrack-ng"
@@ -69,10 +76,10 @@ then
 			echo -e "\tjq"
 		fi
 	else
-		echo "${GREEN}[*] All necessary packages are found installed${NC}"
+		echo -e "${GREEN}[*] All necessary packages are found installed${NC}"
 	fi
 else
-	echo "${YELLOW}[*] Please ensure that you have installed the following packages before starting hashcatch${NC}"
+	echo -e "${YELLOW}[*] Please ensure that you have installed the following packages before starting hashcatch${NC}"
 	echo -e "\taircrack-ng\n\thashcat-utils\n\thcxtools\n\tjq"
 fi
 
