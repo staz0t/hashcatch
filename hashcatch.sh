@@ -1,6 +1,7 @@
 #!/bin/bash
 
 trap ctrl_c INT
+tput civis
 
 RED='\033[0;31m'
 LBLUE='\033[1;34m'
@@ -74,10 +75,28 @@ fi
 
 ctrl_c(){
 	echo -en "\033[2K"
-	echo -e "\r\n${YELLOW}[*] Keyboard Interrupt${NC}"
-	echo -e "${LBLUE}[*] Handshakes captured this session: $hs_count${NC}"
+	echo -en "\n\r${YELLOW}[*] Keyboard Interrupt${NC}"
+	echo -e "\033[K"
+	echo -e "\r${LBLUE}[*] Handshakes captured this session: $hs_count${NC}"
 	rm -r /tmp/hc_* &> /dev/null
+	tput cnorm
+	kill $! &> /dev/null
 	exit 0
+}
+
+spin(){
+        echo -en "/"
+        sleep 0.1
+        echo -en "\033[1D"
+        echo -en "-"
+        sleep 0.1
+        echo -en "\033[1D"
+        echo -en "\\"
+        sleep 0.1
+        echo -en "\033[1D"
+        echo -en "|"
+        sleep 0.1
+        echo -en "\033[1D"
 }
 
 echo -e "${RED}"
@@ -105,11 +124,15 @@ do
 	echo -en "\033[3A"
 	echo -en "\033[2K"
 	echo -en "\rStatus: ${YELLOW}Scanning for wifi networks${NC}"
+	echo -en "\033[2C"
+	while [ true ]; do echo -en "${YELLOW}"; spin; echo -en "${NC}"; done &
+	timeout --foreground 3 airodump-ng "$interface" -t wpa -w /tmp/hc_out --output-format csv &> /dev/null
+	echo -en "${NC}"
+	kill $! &> /dev/null
 	echo -en "\033[1B"
 	echo -en "\033[2K"
 	echo -en "\033[2B"
 	echo -en "\r"
-	timeout --foreground 3 airodump-ng "$interface" -t wpa -w /tmp/hc_out --output-format csv &> /dev/null
 
 	#echo "[*] Reading stations"
 	while read -r line; do bssid=$(echo $line | awk -F ',' '{print $1}'); essid=$(echo $line | awk -F',' '{print $14}'); channel=$(echo $line | awk -F',' '{print $4}'); echo $bssid,$essid,$channel; done < /tmp/hc_out-01.csv | grep -iE "([0-9A-F]{2}[:-]){5}([0-9A-F]{2}), [-a-zA-Z0-9_ !]+, ([0-9]{1,2})" > /tmp/hc_stations.tmp
@@ -147,16 +170,20 @@ do
 		echo -en "\033[3A"
 		echo -en "\033[2K"
 		echo -en "\rStatus: ${YELLOW}Listening for handshake${NC}"
+		while [ true ]; do echo -en "${YELLOW}"; spin; echo -en "${NC}"; done &
+		echo -en "\033[2C"
+		timeout --foreground 10s airodump-ng -w /tmp/hc_captures/"$bssid" --output-format pcap --bssid "$bssid" --channel "$channel" "$interface" &> /dev/null
+		echo -en "${NC}"
+		kill $! &> /dev/null
 		echo -en "\033[3B"
 		echo -en "\r"
-		timeout --foreground 10s airodump-ng -w /tmp/hc_captures/"$bssid" --output-format pcap --bssid "$bssid" --channel "$channel" "$interface" &> /dev/null
 		cap2hccapx "/tmp/hc_captures/$bssid-01.cap" "/tmp/hc_handshakes/$bssid.hccapx" &> /dev/null
 		hashflag=`wlanhcxinfo -i "/tmp/hc_handshakes/$bssid.hccapx" 2>&1`
 		if [[ $hashflag == *"0 records loaded"* ]]
 		then
-			rm "/tmp/hc_handshakes/$bssid.hccapx"
+			rm "/tmp/hc_handshakes/$bssid.hccapx" &> /dev/null
 		else
-			cp "/tmp/hc_handshakes/$bssid.hccapx" "handshakes/$bssid.hccapx"
+			cp "/tmp/hc_handshakes/$bssid.hccapx" "handshakes/$bssid.hccapx" &> /dev/null
 			((hs_count++))
 			loc_data="`curl -s "https://api.mylnikov.org/geolocation/wifi?v=1.2&bssid=$bssid"`"
 			if [ "`echo $loc_data`" ]
