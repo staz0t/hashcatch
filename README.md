@@ -15,7 +15,7 @@ The following packages are necessary for hashcatch to work
 
 #### Setting up
 1. ```./setup.sh```
-2. Enter the interface that can be switched to monitor mode
+2. Enter the interface that can be switched to monitor mode and the script will check for the same
 3. The script will create the required files
 4. The script will also check if prerequisites are installed, in Arch and Debian based distributions
 
