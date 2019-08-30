@@ -6,20 +6,20 @@ Written by [@SivaneshAshok](https://twitter.com/sivaneshashok)
 #### PoC of hashcatch (running with a couple of WiFi networks within range)
 [![hashcatch PoC](https://asciinema.org/a/AQEzLSxo7teoxPzNSJfwn4UNQ.svg)](https://asciinema.org/a/AQEzLSxo7teoxPzNSJfwn4UNQ)
 
-#### Installation and setup from the Releases
-1. Download the package for your distribution from [releases](https://github.com/aircrack-ng/aircrack-ng/releases)
-2. ```pacman -U hashcatch-<ver>.pkg.tar.xz```
-3. ```sudo hashcatch --setup```
-4. Answer the prompts
-5. And done!
-
-#### Installation for distributions other than arch and debian derivatives
+#### Install from source
 1. ```git clone https://github.com/staz0t/hashcatch```
 2. Install the prerequisites and ensure that they are working properly
 3. [optional] Add the hashcatch directory to your PATH
 4. ```./hashcatch --setup```
 5. Answer the prompts
 6. And done!
+
+#### Install using packages
+1. Download the respective package for your distribution from [releases](https://github.com/aircrack-ng/aircrack-ng/releases)
+2. Run ```sudo pacman -U ./hashcatch-<ver>-1-any.pkg.tar.xz``` or ```sudo apt install ./hashcatch_<ver>_all.deb```
+3. ```sudo hashcatch --setup```
+4. Answer the prompts
+5. And done!
 
 #### Prerequisites
 * aircrack-ng
