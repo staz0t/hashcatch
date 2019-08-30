@@ -147,6 +147,8 @@ hc_help(){
 }
 
 hc_run(){
+	interface=`grep -i 'interface' $f_config | awk -F'=' '{print $2}'`
+	
 	if [ "$EUID" -ne 0 ]
 	then
 		echo -e "[-] Requires root permission. Exiting!"
@@ -217,8 +219,6 @@ hc_run(){
 	tput civis
 	
 	banner
-
-	interface=`grep -i 'interface' $f_config | awk -F'=' '{print $2}'`
 
 	rm -r /tmp/hc_* &> /dev/null
 
