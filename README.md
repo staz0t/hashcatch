@@ -60,6 +60,9 @@ ignore=Google Starbucks,AndroidAP
 * More location features
 * Automatic upload to websites to start cracking the handshake
 
+#### Known Issues
+1. [OSX] From issues raised by users, it seems airodump-ng is not working properly in OSX. Since it is a dependency for hashcatch, OSX users might not be able to run hashcatch.
+
 Note: PMKID attack is not included in hashcatch because not all routers are vulnerable to the attack, hence checking for the attack increases the time taken in testing one AP. Pixiedust attack, and collecting information via WPS  while being effective, in a targetted attack, it also increases the time takes in testing one AP, which is not ideal for the mission of this tool, which is to be as fast as possible. Besides that, in my testing I found that there is one WPS enabled router for every 10 APs. Hence, the result provided by hashcatch will not be consistent and it can miss out on an oppurtunity to capture an extra handshake. So, as of now, hashcat will continue working with the conventional deauth and capture method.
 
 PS: Even though I was working on hashcatch few days before [@evilsocket](https://twitter.com/evilsocket) posted about his [pwnagotchi](https://twitter.com/pwnagotchi), his work has definitely been an inspiration for this project!
