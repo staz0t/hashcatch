@@ -291,6 +291,7 @@ hc_run(){
 			if [[ $hashflag == *"0 records loaded"* ]]
 			then
 				rm "/tmp/hc_handshakes/$bssid.hccapx" &> /dev/null
+				rm "/tmp/hc_captures/$bssid-01.cap" &> /dev/null
 			else
 				cp "/tmp/hc_handshakes/$bssid.hccapx" "$d_handshakes/$bssid.hccapx" &> /dev/null
 				((hs_count++))
