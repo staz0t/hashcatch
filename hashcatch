@@ -89,16 +89,16 @@ hc_setup(){
 
 	if [[ `cat /etc/os-release` == *debian* ]]
 	then
-	        if [[ `dpkg -s aircrack-ng hashcat-utils hcxtools jq 2>&1` == *"not installed"* ]]
+	        if [[ (`dpkg -s aircrack-ng jq 2>&1` == *"not installed"*) || (! `command -v cap2hccapx`) || (! `command -v wlanhcxinfo`) ]]
 		then
 			echo -e "${YELLOW}[!] The following packages are missing. Please ensure that you have installed them properly before starting hashcatch${NC}"
 			if [[ `dpkg -s aircrack-ng 2>&1` == *"not installed"* ]]
 			then
 				echo -e "\taircrack-ng"
-			elif [[ `dpkg -s hashcat-utils 2>&1` == *"not installed"* ]]
+			elif [[ ! `command -v cap2hccapx 2>&1` ]]
 			then
 				echo -e "\thashcat-utils"
-			elif [[ `dpkg -s hcxtools 2>&1` == *"not installed"* ]]
+			elif [[ ! `command -v wlanhcxinfo 2>&1` ]]
 			then
 				echo -e "\thcxtools"
 			elif [[ `dpkg -s jq 2>&1` == *"not installed"* ]]
@@ -169,7 +169,7 @@ hc_run(){
 
 	if [[ `cat /etc/os-release` == *debian* ]]
 	then
-	        if [[ `dpkg -s aircrack-ng hashcat-utils hcxtools jq 2>&1` == *"not installed"* ]]
+	        if [[ (`dpkg -s aircrack-ng jq 2>&1` == *"not installed"*)  || (! `command -v cap2hccapx`) || (! `command -v wlanhcxinfo`)]]
 		then
 			echo "${YELLOW}[!] The following packages are missing. Install them and try again!${NC}"
 			exit 0
@@ -177,11 +177,11 @@ hc_run(){
 			then
 				echo -e "\taircrack-ng"
 				exit 0
-			elif [[ `dpkg -s hashcat-utils 2>&1` == *"not installed"* ]]
+			elif [[ ! `command -v cap2hccapx 2>&1` ]]
 			then
 				echo -e "\thashcat-utils"
 				exit 0
-			elif [[ `dpkg -s hcxtools 2>&1` == *"not installed"* ]]
+			elif [[ ! `command -v wlanhcxinfo 2>&1` ]]
 			then
 				echo -e "\thcxtools"
 				exit 0
