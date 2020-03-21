@@ -15,7 +15,7 @@ Written by [@SivaneshAshok](https://twitter.com/sivaneshashok)
 6. And done!
 
 #### Install using packages
-1. Download the respective package for your distribution from [releases](https://github.com/aircrack-ng/aircrack-ng/releases)
+1. Download the respective package for your distribution from [releases](https://github.com/staz0t/hashcatch/releases)
 2. Run ```sudo pacman -U ./hashcatch-<ver>-1-any.pkg.tar.xz``` or ```sudo apt install ./hashcatch_<ver>_all.deb```
 3. ```sudo hashcatch --setup```
 4. Answer the prompts
