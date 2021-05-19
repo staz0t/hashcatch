@@ -92,7 +92,7 @@ hc_setup(){
 
 	read -p "[*] Define path for handshakes [/usr/share/hashcatch/handshakes/]: " handshakes
 	handshakes=${handshakes:-$d_handshakes}
-	rm -r $handshakes &> /dev/null
+	rm -rf $handshakes &> /dev/null
 	mkdir -p $handshakes &> /dev/null
 
 	read -p "[*] Define APs to ignore (comma separated list): " ignore
