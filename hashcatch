@@ -9,7 +9,8 @@ YELLOW='\033[1;33m'
 ORANGE='\033[0;33m'
 NC='\033[0m'
 
-f_config="/etc/hashcatch/hashcatch.conf"
+h_path="/etc/hashcatch/"
+f_config="${h_path}/hashcatch.conf"
 f_db="/usr/share/hashcatch/db"
 d_handshakes="/usr/share/hashcatch/handshakes/"
 
@@ -60,7 +61,8 @@ hc_setup(){
 	banner
 	echo "[*] Starting hashcatch setup"
 
-	if [ -s $f_config ] || [ -s $f_db ] || [ `ls $d_handshakes` ]
+
+	if [ -s $f_config ] || [ -s $f_db ] || [ -d $d_handshakes ]
 	then
 		echo -e "${RED}[!] WARNING! Continuing with setup will rewrite your existing config file, db file, and your handshakes directory! Take a backup if necessary${NC}"
 		read -p "[!] Do you want to proceed? [y/N]: " flag
@@ -72,21 +74,31 @@ hc_setup(){
 		fi
 	fi
 
+	mkdir $h_path &> /dev/null
+	mkdir -p "${f_db%/*}" && touch "$f_db"
+
 	sudo cp /dev/null $f_config &> /dev/null
 	sudo cp /dev/null $f_db &> /dev/null
-	rm -r $d_handshakes &> /dev/null
-	mkdir $d_handshakes &> /dev/null
 
-	read -p "[*] Enter your wireless interface: " interface
+	read -p "[*] Enter your wireless interface [wlan0]: " ${interface:=wlan0}
 	echo -e "[*] Trying to set the given interface to monitor mode"
 	while [[ `sudo aireplay-ng --test $interface 2>&1` != *"Injection is working"* ]]
 	do
-		echo -e "${YELLOW}[-] Could not set the given wireless adapter to monitor mode!${NC}"
+		echo -e "${YELLOW}[-] Could not set ${interface} to monitor mode!${NC}"
 		read -p "[-] Enter another wireless interface to try again: " interface
 	done
-	echo -e "${GREEN}[+] The adapter is working in monitor mode!${NC}"
+	echo -e "${GREEN}[+] ${interface} is working in monitor mode!${NC}"
 	echo "interface=$interface" >> $f_config
 
+	read -p "[*] Define path for handshakes [/usr/share/hashcatch/handshakes/]: " handshakes
+	handshakes=${handshakes:-$d_handshakes}
+	rm -r $handshakes &> /dev/null
+	mkdir -p $handshakes &> /dev/null
+
+	read -p "[*] Define APs to ignore (comma separated list): " ignore
+	echo "ignore=$ignore" >> $f_config
+
+	
 	if [[ `cat /etc/os-release` == *debian* ]]
 	then
 	        if [[ (`dpkg -s aircrack-ng jq 2>&1` == *"not installed"*) || (! `command -v cap2hccapx`) || (! `command -v wlanhcxinfo`) ]]
